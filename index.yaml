@@ -3,6 +3,29 @@ entries:
   mastodon:
   - apiVersion: v2
     appVersion: v4.2.1
+    created: "2023-11-12T11:29:35.436208007Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 13.2.5
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 19.13.9
+    - condition: redis.enabled
+      name: redis
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 18.3.2
+    description: Mastodon is a free, open-source social network server based on ActivityPub.
+    digest: 9c4445bb10b58b094a8ae9e5ff032d0c70678477bdbecd1b321d88254b040869
+    name: mastodon
+    type: application
+    urls:
+    - https://github.com/small-hack/mastodon-helm-chart/releases/download/mastodon-5.0.0/mastodon-5.0.0.tgz
+    version: 5.0.0
+  - apiVersion: v2
+    appVersion: v4.2.1
     created: "2023-10-31T10:23:08.194689564Z"
     dependencies:
     - condition: postgresql.enabled
@@ -484,4 +507,4 @@ entries:
     urls:
     - https://github.com/jessebot/mastodon-helm-chart/releases/download/mastodon-4.0.1/mastodon-4.0.1.tgz
     version: 4.0.1
-generated: "2023-10-31T10:23:08.194813267Z"
+generated: "2023-11-12T11:29:35.43639162Z"
