@@ -16,7 +16,7 @@ appVersion: v4.2.1
 
 dependencies:
   - name: postgresql
-    version: 13.2.5
+    version: 13.4.6
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
 
