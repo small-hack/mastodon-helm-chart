@@ -26,6 +26,6 @@ dependencies:
     condition: elasticsearch.enabled
 
   - name: redis
-    version: 18.17.0
+    version: 18.19.4
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: redis.enabled
