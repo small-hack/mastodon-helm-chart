@@ -440,31 +440,32 @@ mastodon:
     # -- (Streaming Container) Security Context for Streaming Pods, overwrites .Values.securityContext
     securityContext: {}
     # -- (Streaming Container) Resources for Streaming Pods, overwrites .Values.resources
-    resources: {}
-    # limits:
-    #   cpu: "500m"
-    #   memory: 512Mi
-    # requests:
-    #   cpu: 250m
-    #   memory: 128Mi
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 128Mi
     # -- PodDisruptionBudget configuration - See https://kubernetes.io/docs/tasks/run-application/configure-pdb/
     pdb:
       enable: false
-    # minAvailable: 1
-    # maxUnavailable: 1
+      minAvailable: 1
+      maxUnavailable: 1
     # -- Puma-specific options. Below values are based on default behavior in
     # config/puma.rb when no custom values are provided.
     # -- Self-signed certificate(s) the (Node.js) needs to trust to connect to e.g. the database
     extraCerts: {}
-    # -- Secret containing a key "ca.crt" holding one or more root certificates in PEM format
+    ## Secret containing a key "ca.crt" holding one or more root certificates in PEM format
     #  existingSecret:
-    # -- Optional volume name for mounting the .crt file, defaults to "extra-certs"
+    ## Optional volume name for mounting the .crt file, defaults to "extra-certs"
     #  name:
-    # -- Optional sslMode setting. See nodejs's SSL_MODE. Consider "no-verify"
+    ## Optional sslMode setting. See nodejs's SSL_MODE. Consider "no-verify"
     #  sslMode:
 
-    # Specify extra environment variables to be added to streaming pods.
+    # -- Specify extra environment variables to be added to streaming pods.
     extraEnvVars: {}
+
   web:
     port: 3000
     # -- Number of Web Pods running
