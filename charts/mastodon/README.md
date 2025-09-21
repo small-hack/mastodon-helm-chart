@@ -1,6 +1,6 @@
 # mastodon
 
-![Version: 11.0.4](https://img.shields.io/badge/Version-11.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.4.4](https://img.shields.io/badge/AppVersion-v4.4.4-informational?style=flat-square)
+![Version: 11.1.0](https://img.shields.io/badge/Version-11.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.4.4](https://img.shields.io/badge/AppVersion-v4.4.4-informational?style=flat-square)
 
 Mastodon is a free, open-source social network server based on ActivityPub.
 
@@ -205,18 +205,18 @@ Mastodon is a free, open-source social network server based on ActivityPub.
 | mastodon.streaming.annotations | object | `{}` | These are applied in addition to deploymentAnnotations. |
 | mastodon.streaming.base_url | string | `nil` | The base url for streaming can be set if the streaming API is deployed to a different domain/subdomain. |
 | mastodon.streaming.extraCerts | object | `{}` | Self-signed certificate(s) the (Node.js) needs to trust to connect to e.g. the database |
-| mastodon.streaming.extraEnvVars | object | `{}` |  |
+| mastodon.streaming.extraEnvVars | object | `{}` | Specify extra environment variables to be added to streaming pods. |
 | mastodon.streaming.image.repository | string | `"ghcr.io/mastodon/mastodon-streaming"` | image repo for the mastodon streaming image |
 | mastodon.streaming.image.tag | string | `""` | set a specific tag for mastodon-streaming image, defaults to appVersion in Chart.yaml |
 | mastodon.streaming.labels | object | `{}` | These are applied in addition to mastodon.labels. |
 | mastodon.streaming.nodeSelector | object | `{}` | Node(s) on which we will deploy the streaming pods |
-| mastodon.streaming.pdb | object | `{"enable":false}` | PodDisruptionBudget configuration - See https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
+| mastodon.streaming.pdb | object | `{"enable":false,"maxUnavailable":1,"minAvailable":1}` | PodDisruptionBudget configuration - See https://kubernetes.io/docs/tasks/run-application/configure-pdb/ |
 | mastodon.streaming.podAnnotations | object | `{}` | These are applied in addition to the global podAnnotations. |
 | mastodon.streaming.podLabels | object | `{}` | These are applied in addition to mastodon.labels. |
 | mastodon.streaming.podSecurityContext | object | `{}` | Pod Security Context for Streaming Pods, overwrites .Values.podSecurityContext |
 | mastodon.streaming.port | int | `4000` |  |
 | mastodon.streaming.replicas | int | `1` | Number of Streaming Pods running |
-| mastodon.streaming.resources | Streaming Container | `{}` | Resources for Streaming Pods, overwrites .Values.resources |
+| mastodon.streaming.resources | Streaming Container | `{"limits":{"cpu":"1000m","memory":"1Gi"},"requests":{"cpu":"250m","memory":"128Mi"}}` | Resources for Streaming Pods, overwrites .Values.resources |
 | mastodon.streaming.securityContext | Streaming Container | `{}` | Security Context for Streaming Pods, overwrites .Values.securityContext |
 | mastodon.streaming.topologySpreadConstraints | object | `{}` | Topology spread constraints for Streaming Pods, overwrites .Values.topologySpreadConstraints |
 | mastodon.streaming.updateStrategy.rollingUpdate.maxSurge | string | `"10%"` |  |

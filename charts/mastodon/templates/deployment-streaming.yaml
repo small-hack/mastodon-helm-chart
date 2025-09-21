@@ -121,8 +121,9 @@ spec:
             {{- end }}
             - name: "PORT"
               value: {{ .Values.mastodon.streaming.port | quote }}
-            {{- with .Values.mastodon.extraEnvVars }}
-            {{- toYaml . | nindent 12 }}
+            {{- range $name, $value := .Values.mastodon.streaming.extraEnvVars }}
+            - name: {{ $name }}
+              value: {{ quote $value }}
             {{- end }}
           volumeMounts:
           {{- with .Values.mastodon.extraVolumeMounts }}
