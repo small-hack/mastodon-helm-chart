@@ -1,6 +1,6 @@
 # mastodon
 
-![Version: 11.1.1](https://img.shields.io/badge/Version-11.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.4.5](https://img.shields.io/badge/AppVersion-v4.4.5-informational?style=flat-square)
+![Version: 11.1.2](https://img.shields.io/badge/Version-11.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.4.6](https://img.shields.io/badge/AppVersion-v4.4.6-informational?style=flat-square)
 
 Mastodon is a free, open-source social network server based on ActivityPub.
 
