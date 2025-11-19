@@ -4,8 +4,14 @@ metadata:
   name: {{ include "mastodon.fullname" . }}-streaming
   labels:
     {{- include "mastodon.labels" . | nindent 4 }}
+    {{- with .Values.mastodon.streaming.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   annotations:
-    {{- with (default .Values.deploymentAnnotations .Values.mastodon.streaming.deploymentAnnotations) }}
+    {{- with .Values.deploymentAnnotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- with .Values.mastodon.streaming.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
@@ -23,13 +29,23 @@ spec:
   template:
     metadata:
       annotations:
-        {{- with (default .Values.podAnnotations .Values.mastodon.streaming.podAnnotations) }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.mastodon.streaming.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
         # roll the pods to pick up any db migrations or other changes
         {{- include "mastodon.rollingPodAnnotations" . | nindent 8 }}
       labels:
+        {{- include "mastodon.globalLabels" . | nindent 8 }}
         {{- include "mastodon.selectorLabels" . | nindent 8 }}
+        {{- with .Values.mastodon.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.mastodon.streaming.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         app.kubernetes.io/component: streaming
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -41,10 +57,19 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.mastodon.extraVolumes }}
+      {{- if or .Values.mastodon.extraVolumes .Values.mastodon.streaming.extraCerts }}
       volumes:
-        {{- if gt (len .Values.mastodon.extraVolumes) 0 }}
-        {{ toYaml .Values.mastodon.extraVolumes | nindent 8}}
+        {{- with .Values.mastodon.extraVolumes }}
+        {{ toYaml . | nindent 8}}
+        {{- end }}
+        {{- with .Values.mastodon.streaming.extraCerts }}
+        {{- $name := .name | default "extra-certs" }}
+        - name: {{ $name }}
+          secret:
+            secretName: {{ .existingSecret }}
+            items:
+            - key: ca.crt
+              path: trusted-ca.crt
         {{- end }}
       {{- end }}
       containers:
@@ -66,6 +91,10 @@ spec:
                 name: {{ .Values.mastodon.extraEnvFrom }}
             {{- end}}
           env:
+            {{- with .Values.mastodon.streaming.extraCerts }}
+            - name: "NODE_EXTRA_CA_CERTS"
+              value: "/usr/local/share/ca-certificates/trusted-ca.crt"
+            {{- end }}
             - name: "DB_PASS"
               valueFrom:
                 secretKeyRef:
@@ -92,14 +121,18 @@ spec:
             {{- end }}
             - name: "PORT"
               value: {{ .Values.mastodon.streaming.port | quote }}
-            {{- with .Values.mastodon.extraEnvVars }}
-            {{- toYaml . | nindent 12 }}
+            {{- range $name, $value := .Values.mastodon.streaming.extraEnvVars }}
+            - name: {{ $name }}
+              value: {{ quote $value }}
             {{- end }}
-          {{- if or .Values.mastodon.extraVolumeMounts }}
           volumeMounts:
-          {{- if gt (len .Values.mastodon.extraVolumeMounts) 0 }}
-          {{- toYaml .Values.mastodon.extraVolumeMounts | nindent 12 }}
+          {{- with .Values.mastodon.extraVolumeMounts }}
+          {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with .Values.mastodon.streaming.extraCerts }}
+          {{- $name := .name | default "extra-certs" }}
+          - name: {{ $name }}
+            mountPath: "/usr/local/share/ca-certificates"
           {{- end }}
           ports:
             - name: streaming
@@ -130,6 +163,10 @@ spec:
       {{- end }}
       {{- with (default .Values.affinity .Values.mastodon.streaming.affinity) }}
       affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with (default .Values.topologySpreadConstraints .Values.mastodon.streaming.topologySpreadConstraints) }}
+      topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.tolerations }}
