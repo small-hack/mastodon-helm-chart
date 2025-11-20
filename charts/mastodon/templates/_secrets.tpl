@@ -15,9 +15,9 @@ metadata:
     {{- include "mastodon.labels" . | nindent 4 }}
   annotations:
     {{- if .prepare }}
-    "helm.sh/hook": pre-install
+    "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-    "helm.sh/hook-weight": "-3"
+    "helm.sh/hook-weight": "-10"
     {{- end }}
 type: Opaque
 data:
