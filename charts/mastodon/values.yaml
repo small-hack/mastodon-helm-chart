@@ -145,6 +145,20 @@ mastodon:
   # -- Enables "Limited Federation Mode" for more detauls see: https://docs.joinmastodon.org/admin/config/#limited_federation_mode
   limitedFederationMode: false
 
+  # - volumePermissions.enabled Enable init container that changes volume permissions in the data directory (for cases where the default k8s `runAsUser` and `fsUser` values do not work)
+  volumePermissions:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/os-shell
+
+  # - sysctlImage.enabled Enable kernel settings modifier image
+  sysctlImage:
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/os-shell
+  
   persistence:
     assets:
       # -- ReadWriteOnce is more widely supported than ReadWriteMany, but limits
