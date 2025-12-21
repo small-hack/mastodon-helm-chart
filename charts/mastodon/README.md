@@ -18,7 +18,7 @@ Mastodon is a free, open-source social network server based on ActivityPub.
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity for all pods unless overwritten |
 | deploymentAnnotations | object | `{}` |  |
-| elasticsearch | object | `{}` | https://github.com/bitnami/charts/tree/main/bitnami/elasticsearch#parameters |
+| elasticsearch | object | `{"image":{"repository":"bitnamilegacy/elasticsearch"}}` | https://github.com/bitnami/charts/tree/main/bitnami/elasticsearch#parameters |
 | externalAuth.cas.enabled | bool | `false` |  |
 | externalAuth.ldap.enabled | bool | `false` |  |
 | externalAuth.oauth_global.omniauth_only | bool | `false` | Automatically redirect to OIDC, CAS or SAML, and don't use local account authentication when clicking on Sign-In |
