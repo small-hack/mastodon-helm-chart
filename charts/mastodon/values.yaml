@@ -628,6 +628,21 @@ elasticsearch:
   # (https://docs.joinmastodon.org/admin/optional/elasticsearch/)
   # @ignored
   enabled: true
+  image:
+    repository: bitnamilegacy/elasticsearch
+
+  # - volumePermissions.enabled Enable init container that changes volume permissions in the data directory (for cases where the default k8s `runAsUser` and `fsUser` values do not work)
+  volumePermissions:
+    enabled: false
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/os-shell
+
+  # - sysctlImage.enabled Enable kernel settings modifier image
+  sysctlImage:
+    enabled: true
+    registry: docker.io
+    repository: bitnamilegacy/os-shell
 
 externalDatabase:
   # -- enable to use an external database instead of the included bitnami postgresql subchart
