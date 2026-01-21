@@ -89,7 +89,7 @@ Create the name of the assets persistent volume to use
 {{- if .Values.mastodon.persistence.assets.existingClaim }}
     {{- printf "%s" (tpl .Values.mastodon.persistence.assets.existingClaim $) -}}
 {{- else -}}
-    {{- printf "%s-assets" (include "common.names.fullname" .) -}}
+    {{- printf "%s-assets" (include "mastodon.fullname" .) -}}
 {{- end -}}
 {{- end -}}
 
@@ -100,7 +100,7 @@ Create the name of the system persistent volume to use
 {{- if .Values.mastodon.persistence.system.existingClaim }}
     {{- printf "%s" (tpl .Values.mastodon.persistence.system.existingClaim $) -}}
 {{- else -}}
-    {{- printf "%s-system" (include "common.names.fullname" .) -}}
+    {{- printf "%s-system" (include "mastodon.fullname" .) -}}
 {{- end -}}
 {{- end -}}
 
@@ -109,15 +109,15 @@ Create a default fully qualified name for dependent services.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "mastodon.elasticsearch.fullname" -}}
-{{- printf "%s-%s" .Release.Name "elasticsearch" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-elasticsearch" (include "mastodon.fullname" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "mastodon.redis.fullname" -}}
-{{- printf "%s-%s" .Release.Name "redis" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-redis" (include "mastodon.fullname" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "mastodon.postgresql.fullname" -}}
-{{- printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-postgresql" (include "mastodon.fullname" .) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
@@ -181,7 +181,7 @@ Get the mastodon secret.
 {{- if .Values.mastodon.secrets.existingSecret }}
     {{- printf "%s" (tpl .Values.mastodon.secrets.existingSecret $) -}}
 {{- else -}}
-    {{- printf "%s" (include "common.names.fullname" .) -}}
+    {{- printf "%s" (include "mastodon.fullname" .) -}}
 {{- end -}}
 {{- end -}}
 
@@ -192,7 +192,7 @@ Get the smtp secret.
 {{- if .Values.mastodon.smtp.existingSecret }}
     {{- printf "%s" (tpl .Values.mastodon.smtp.existingSecret $) -}}
 {{- else -}}
-    {{- printf "%s-smtp" (include "common.names.fullname" .) -}}
+    {{- printf "%s-smtp" (include "mastodon.fullname" .) -}}
 {{- end -}}
 {{- end -}}
 
@@ -212,11 +212,11 @@ Get the postgresql secret.
 {{- if (and (or .Values.postgresql.enabled .Values.postgresql.postgresqlHostname) .Values.postgresql.auth.existingSecret) }}
     {{- printf "%s" (tpl .Values.postgresql.auth.existingSecret $) -}}
 {{- else if and .Values.postgresql.enabled (not .Values.postgresql.auth.existingSecret) -}}
-    {{- printf "%s-postgresql" (tpl .Release.Name $) -}}
+    {{- printf "%s-postgresql" (include "mastodon.fullname" $) -}}
 {{- else if and .Values.externalDatabase.enabled .Values.externalDatabase.existingSecret -}}
     {{- printf "%s" (tpl .Values.externalDatabase.existingSecret $) -}}
 {{- else -}}
-    {{- printf "%s" (include "common.names.fullname" .) -}}
+    {{- printf "%s" (include "mastodon.fullname" .) -}}
 {{- end -}}
 {{- end -}}
 
@@ -229,7 +229,7 @@ Get the redis secret name
 {{- else if .Values.redis.existingSecret }}
     {{- printf "%s" (tpl .Values.redis.existingSecret $) -}}
 {{- else -}}
-    {{- printf "%s-redis" (tpl .Release.Name $) -}}
+    {{- printf "%s-redis" (include "mastodon.fullname" $) -}}
 {{- end -}}
 {{- end -}}
 
@@ -244,7 +244,7 @@ Get the redis secret (sidekiq).
 {{- else if .Values.redis.existingSecret }}
     {{- printf "%s" (tpl .Values.redis.existingSecret $) -}}
 {{- else -}}
-    {{- printf "%s-redis" (tpl .Release.Name $) -}}
+    {{- printf "%s-redis" (include "mastodon.fullname" $) -}}
 {{- end -}}
 {{- end -}}
 
@@ -259,7 +259,7 @@ Get the redis secret (cache).
 {{- else if .Values.redis.existingSecret }}
     {{- printf "%s" (tpl .Values.redis.existingSecret $) -}}
 {{- else -}}
-    {{- printf "%s-redis" (tpl .Release.Name $) -}}
+    {{- printf "%s-redis" (include "mastodon.fullname" $) -}}
 {{- end -}}
 {{- end -}}
 

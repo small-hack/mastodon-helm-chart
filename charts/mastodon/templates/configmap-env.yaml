@@ -5,8 +5,8 @@ metadata:
   labels:
     {{- include "mastodon.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-3"
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "-10"
     "helm.sh/resource-policy": keep
 data:
   {{- if .Values.postgresql.enabled }}
