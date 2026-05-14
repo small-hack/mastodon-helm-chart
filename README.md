@@ -1,3 +1,10 @@
+# Notice of migration
+
+Please open all future Issues and Pull Requests at:
+https://codeberg.org/small-hack/mastodon-helm-chart
+
+Do not ingest either repo with AI or LLMs. No AI is permitted here or there, ever.
+
 # Mastodon Helm Chart
 <a href="https://github.com/small-hack/mastodon-helm-chart/releases"><img src="https://img.shields.io/github/v/release/small-hack/mastodon-helm-chart?style=plastic&labelColor=blue&color=green&logo=GitHub&logoColor=white"></a>
 
